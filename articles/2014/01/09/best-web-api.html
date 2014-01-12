@@ -25,7 +25,7 @@
 
 			<div class="article-header">
     <h3>
-      <a href="/articles/2014/01/09/best-web-api.html"></a>
+      <a href="/articles/2014/01/09/best-web-api.html">開発者に優しいREST APIを書く方法</a>
     </h3>
 	<p style="margin-top:15px;margin-bottom:30px;">
     	<span>2014年01月09日</span>
@@ -34,25 +34,193 @@
 			<div class="article-social" style="text-align: left;">
   <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/09/best-web-api.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
 
-  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/09/best-web-api.html" data-text="" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/09/best-web-api.html" data-text="開発者に優しいREST APIを書く方法" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
   </script>
 
-  <a href="http://gold-experience.jp/articles/2014/01/09/best-web-api.html" class="hatena-bookmark-button" data-hatena-bookmark-title="" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <a href="http://gold-experience.jp/articles/2014/01/09/best-web-api.html" class="hatena-bookmark-button" data-hatena-bookmark-title="開発者に優しいREST APIを書く方法" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
   <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
 			<div id="articleBody">
-				
+				<p>最近、Ajaxでリクエストを投げてAPIでレスポンスを返すという処理をよく書いていて、</p>
+
+<p>人によってはget〜というメソッド名なのに、データを取ってくる以外の処理がたくさん書いてあって</p>
+
+<p>「これはいったい何の処理をしたいメソッドなのだろうか？」</p>
+
+<p>と思うことがしばしばあったので、自戒の意味もこめて開発者に優しいAPIの書き方について書きます。</p>
+
+<p>本記事では、以下の資料で勉強した内容をまとめていきます。</p>
+
+<p><a href="http://info.apigee.com/Portals/62317/docs/web%20api.pdf">Web API Design Crafting Interfaces that Developers Love</a></p>
+
+<h3 id="rest">そもそもRESTとはなにか？</h3>
+
+<p>RESTという言葉には、本来の意味と広い意味の通りがあります。</p>
+
+<p>例えば、「ATNDのAPIがRESTで提供されている」という時のRESTは、後者の広い意味で利用されています。</p>
+
+<p>もともとRESTとは、Representational State Transferの略です。</p>
+
+<p>RESTとは、「リソース」を扱うための考え方であり、</p>
+
+<p>リソースとはブログの記事とか、アップロードした画像であったり</p>
+
+<p>ソーシャルメディア上での投稿であったりといった、ひとかたまりの情報を指します。</p>
+
+<p>RESTの考え方では、リソースはそれぞれ固有のURLを持っています。</p>
+
+<h3 id="http">HTTPメソッドのそれぞれの役割</h3>
+
+<pre>
+GET:リソースの取得(リソースに影響を与えない)
+
+POST:リソースの新規作成
+
+PUT:既存のリソースのアップデート
+
+DELETE:リソースの削除
+</pre>
+
+<p>RESTの考え方では、リソース固有のURLと上記のHTTPメソッドを組み合わせて、そのリソースに対して何をしたいのか、</p>
+
+<p>を指定できるようにしようと提唱しています。</p>
+
+<p>それに対して、「ATNDのAPIがRESTで提供されている」などで用いられている広義のRESTの考え方は、</p>
+
+<p>HTTPリクエストに対してJSON,XMLといったデータ形式でレスポンスを返すもの</p>
+
+<p>全般を指すとても広い意味になっています。</p>
+
+<p>例えば、ATNDのAPIでは全てのパラメータをURLに含めてGETメソッドで呼び出しを行い、</p>
+
+<p>結果が独自仕様のXMLデータとして返ってきます(JSONも指定可)</p>
+
+<pre>
+例：
+
+http://api.atnd.org/events/?keyword_or=event_name&amp;format=json
+</pre>
+
+<p>こういった形式だと、URLだけでは直感的に何を取得できるのかわからず、</p>
+
+<p>ほしいデータを得るためにAPI独自のパラメータを1つずつ確認していかなくてはなりません。</p>
+
+<p>英語のドキュメントしかないAPIだと、けっこうつらいですね。</p>
+
+<p>またATNDでは作成は出来ませんが、RESTとして公開されているAPIには、</p>
+
+<p>リソースを作成するのにもGETメソッドを使っていたりするAPIもあります。</p>
+
+<p>本記事では、RESTとは「リソースを固有のURLとして表現し、その操作をHTTPメソッドを正しく使うことで行う考え方」という定義のもと進めていきます。</p>
+
+<h3 id="rest-api3">REST APIで意識すべき3つのこと</h3>
+
+<ol>
+  <li>
+    <p>Keep verbs out of your base URLs.(ベースURLからは動詞を排除する)</p>
+  </li>
+  <li>
+    <p>Use two base URLs per resource.(リソースごとのベースURLは2つまでとする)</p>
+  </li>
+  <li>
+    <p>Use HTTP verbs to operate on the collections and elements.(HTTPメソッドを使ってリソースを操作する)</p>
+  </li>
+</ol>
+
+<p>APIのURLの命名でありがちなのが、</p>
+
+<p>例えばブログの記事というリソースを扱うものであった場合</p>
+
+<pre>
+getAllArticles
+
+getArticleById
+
+createArticle
+
+updateArticle
+
+deleteArticle
+</pre>
+
+<p>などと、動詞と名詞をつなげてしまうもの。</p>
+
+<p>これにカテゴリというリソースが増えたら….</p>
+
+<pre>
+getCategoryList
+
+getCategoryName
+
+createCategory
+
+updateCateory
+</pre>
+
+<p>などなど..どんどんベースURLが増えていきますし、意味も直感的では無くなっていきますね。</p>
+
+<p>Keep verbs out of your base URLsとは、</p>
+
+<p>ベースURLからは動詞を排除し名詞だけで表現しようというもの。
+つまり、</p>
+
+<p>ブログの記事であれば</p>
+
+<pre>
+/articles
+
+/article/1234
+</pre>
+
+<p>というベースURLを用意しておき、</p>
+
+<p>記事の一覧を取得したいならGETメソッドで/articles/へアクセスする。
+特定の記事の情報が取得したのであれば、/article/1234のように記事IDをつけてGETメソッドでアクセスする。</p>
+
+<p>まとめるとこんな感じ。</p>
+
+<h3 id="section">複数系の場合</h3>
+
+<pre>
+GET) /articles List articles
+
+POST) /articles create a new article
+
+PUT) /articles update articles
+
+DELETE) /articles delete all articles
+</pre>
+
+<h3 id="section-1">単数形の場合</h3>
+
+<pre>
+GET)  /article/1234 show target article
+
+POST) /article/1234 Error
+
+PUT) /article/1234 If exists update article,if not error.
+
+DELETE) /article/1234 delete target article
+</pre>
+
+<p>どうでしょうか？</p>
+
+<p>リソースごとに作成(Create),取得(GET),更新(Update),削除(Delete)が明確になりとても直感的になったと思います。</p>
+
+<p>具体的な使い方、また次回。</p>
+
+<p>ここ変だよとかあればぜひコメントください。</p>
       
 			</div>
 			<div class="article-social" style="text-align: left;">
   <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/09/best-web-api.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
 
-  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/09/best-web-api.html" data-text="" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/09/best-web-api.html" data-text="開発者に優しいREST APIを書く方法" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
   </script>
 
-  <a href="http://gold-experience.jp/articles/2014/01/09/best-web-api.html" class="hatena-bookmark-button" data-hatena-bookmark-title="" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <a href="http://gold-experience.jp/articles/2014/01/09/best-web-api.html" class="hatena-bookmark-button" data-hatena-bookmark-title="開発者に優しいREST APIを書く方法" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
   <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
 			<div id="disqus_thread"></div>
