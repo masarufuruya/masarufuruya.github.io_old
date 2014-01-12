@@ -1,0 +1,228 @@
+ <!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <link href="/stylesheets/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/bootstrap-theme.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/gold-experience.css" media="screen" rel="stylesheet" type="text/css" / >
+</head>
+<body>
+  <div id="header" class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  </div><!-- /header --> 
+
+
+    <div id="Content" class="row">
+      <div class="container">
+        <div id="LeftContent" class="col-xs-12">
+			<h2><a style="color:#333" href="http://gold-experience.jp">黄金体験</a></h2>
+<p><a style="color:#333;" href="http://gold-experience.jp">〜刺激あふれる毎日を過ごしたいエンジニアのブログ〜</a></p>
+<hr/>
+
+			<div class="article-header">
+    <h3>
+      <a href="/articles/2014/01/12/mysql-slow-query.html">スロークエリ対策したら、実行速度が10分の一になった話</a>
+    </h3>
+	<p style="margin-top:15px;margin-bottom:30px;">
+    	<span>2014年01月12日</span>
+    </p>
+</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/12/mysql-slow-query.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/12/mysql-slow-query.html" data-text="スロークエリ対策したら、実行速度が10分の一になった話" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/01/12/mysql-slow-query.html" class="hatena-bookmark-button" data-hatena-bookmark-title="スロークエリ対策したら、実行速度が10分の一になった話" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="articleBody">
+				<p>Webアプリケーションを作ってある程度データ量が溜まってくると、</p>
+
+<p>「あれ、何か画面の表示にめっちゃ時間かかるな。。。」</p>
+
+<p>と思う時があるはず！</p>
+
+<p>そんな時こそスロークエリを疑ってみましょう。</p>
+
+<p>自分はこれ対策したらクエリの実行時間が約1/10に短縮されました。</p>
+
+<p>レスポンスタイムは他にもコントローラー処理 + レンダリングなどが</p>
+
+<p>あるので単純に1/10では無いですが対策しないよりは、かなり早くなります。</p>
+
+<h3 id="section">対策の流れ</h3>
+
+<p>対策の流れは大まかに以下の通り</p>
+
+<pre>
+1. スロークエリログの有効化
+
+2. クエリの実行時間順にログをソートする
+
+3. explainコマンドでクエリの解析を行う
+
+4. インデックスの作成
+</pre>
+
+<p>では、順番に見てみていきましょう。</p>
+
+<h3 id="section-1">1. スロークエリログの有効化</h3>
+
+<p>MySQLにはスロークエリをログとして出力する機能があり、</p>
+
+<p>デフォルトでは無効になっているのでこれをまずは有効にします。</p>
+
+<pre>
+$ vi /etc/my.conf
+</pre>
+
+<p>設定を以下のように変更します。</p>
+
+<pre>
+[mysqld]
+slow_query_log=ON
+slow_query_log_file=mysql-slow.log
+long_query_time=0.01
+</pre>
+
+<p>これは実行に0.01秒以上かかっているクエリをスロークエリとしてログに出力します。</p>
+
+<p>大したデータ数の無いアプリケーションでは何も出力されないかもしれません。</p>
+
+<p>実行されているクエリを全て確認したいということであれば、</p>
+
+<p>long_query_time=0にすれば全てのクエリを出力することが出来ます。</p>
+
+<h3 id="section-2">2. クエリの実行時間順にログをソートする</h3>
+
+<p>さて出力したログを確認していくわけですが、mysqldumpslowというコマンドが便利です。</p>
+
+<p>以下のようにすると実行にかかっている時間順にソートしてくれます。</p>
+
+<p>tが実行時間、sがソートということですね。</p>
+
+<pre>
+sudo mysqldumpslow -s t /var/lib/mysql/mysql-slow.log
+</pre>
+
+<p>これで実行時間が長い順番に対策をしていきます。</p>
+
+<h3 id="explain">3. explainでクエリの解析を行う</h3>
+
+<p>クエリの解析には、explainというコマンドを使います。</p>
+
+<pre>
+mysql&gt; EXPLAIN SELECT * from User where id = user_id;
+</pre>
+
+<p>のようにEXPLAINの後ろに解析したいSQL文を書きます。</p>
+
+<p>このコマンドの出力結果は初めて見た人にはかなり難しいと思います。</p>
+
+<p>まずは以下のサイトで一通り確認されることをオススメします。</p>
+
+<p><a href="http://nippondanji.blogspot.com/2009/03/mysqlexplain.html">漢(オトコ)のコンピュータ道: MySQLのEXPLAINを徹底解説!!</a></p>
+
+<p>非常によくまとまっていて、MySQL初心者の自分でも理解することが出来ました。</p>
+
+<p>色々書いてありますが、1点だけ覚えておくべきことは</p>
+
+<p>「typeがALLまたはIndexのクエリーにインデックスを作成する」ことです。</p>
+
+<p>これだけでもかなり速度は早くなります。</p>
+
+<h3 id="section-3">4. インデックスの作成</h3>
+
+<p>MySQLのインデックスについての解説はこのサイトがわかりやすいです。</p>
+
+<p><a href="http://d.hatena.ne.jp/kiyo560808/20101117/1289952549">MySQLパフォーマンスチューニングのためのインデックスの基礎知識 - 久保清隆の成長ノート @ライブレボリューション</a></p>
+
+<p>インデックスの操作は以下のコマンドで出来ます</p>
+
+<p>必要に応じて利用して下さい。</p>
+
+<p>インデックス確認</p>
+
+<pre>
+&gt;myaql SHOW INDEX FROM テーブル名;
+</pre>
+
+<p>インデックス削除</p>
+
+<pre>
+&gt;mysql ALTER TABLE テーブル名 DROP INDEX インデックス名;
+</pre>
+
+<p>インデックス作成</p>
+
+<pre>
+&gt;mysql CREATE INDEX インデックス名 ON テーブル名(インデックスのキー名);
+</pre>
+
+<p>インデックスを作成する際に注意したいのは、</p>
+
+<p>「MySQLではクエリを実行する際に、1つのテーブルにつき1つのインデックスしか作成出来ない」</p>
+
+<p>という点です。</p>
+
+<p>つまり、あるテーブルに複合インデックスを作成していたとして</p>
+
+<p>もし複合インデックスの条件に当てはまらない検索をそのテーブルに実行した場合、</p>
+
+<p>インデックスが適用されず、スロークエリになる可能性があります。</p>
+
+<p>そのため個人的には複合インデックスを作成するよりも、</p>
+
+<p>よく利用される可能性が高いキーを単体でインデックスを貼っておいた方が応用がきいていいかなと思います。</p>
+
+<p>ユーザーのプロフィールのテーブルであれば、ユーザーIDで検索することが普通、一番多いですよね。</p>
+
+<p>だったら以下のように作成するイメージです。</p>
+
+<pre>
+mysql CREATE INDEX user_index ON user(user_id);
+</pre>
+
+<p>このあたりは１つずつEXPLAINコマンドで結果を確認して、調整していってください。</p>
+
+<p>以上です！</p>
+
+<p>何か変な所やもっとこうした方がいいよというのがあればコメントください！</p>
+      
+			</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/12/mysql-slow-query.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/12/mysql-slow-query.html" data-text="スロークエリ対策したら、実行速度が10分の一になった話" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/01/12/mysql-slow-query.html" class="hatena-bookmark-button" data-hatena-bookmark-title="スロークエリ対策したら、実行速度が10分の一になった話" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//gold-experience-masaru.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+        </div><!--LeftContent-->
+      </div><!--container-->
+    </div><!--Content-->
+
+		<div id="footer" class="container"></div>
+	</body>
+</html>
