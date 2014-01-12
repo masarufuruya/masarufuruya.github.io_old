@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   <link href="/stylesheets/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
@@ -16,41 +15,42 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   </div><!-- /header --> 
 
+
     <div id="Content" class="row">
       <div class="container">
         <div id="LeftContent" class="col-xs-12">
-          <h2><a style="color:#333" href="http://gold-experience.jp">黄金体験</a></h2>
+			<h2><a style="color:#333" href="http://gold-experience.jp">黄金体験</a></h2>
 <p><a style="color:#333;" href="http://gold-experience.jp">〜刺激あふれる毎日を過ごしたいエンジニアのブログ〜</a></p>
 <hr/>
-          <div class="article-header">
+
+			<div class="article-header">
     <h3>
       <a href="/articles/2014/01/02/jQueryDeferred.html">任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について</a>
     </h3>
-    <p style="margin-top:15px;margin-bottom:30px;">
-		<span>2014年01月02日</span>
+	<p style="margin-top:15px;margin-bottom:30px;">
+    	<span>2014年01月02日</span>
     </p>
 </div>
-          
-<div class="article-social" style="text-align: left;">
-	<iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
 
-	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html" data-text="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-	</script>
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html" data-text="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
 
-	<a href="http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html" class="hatena-bookmark-button" data-hatena-bookmark-title="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
-	<script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html" class="hatena-bookmark-button" data-hatena-bookmark-title="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
-          
-          <div id="articleBody">
-            <p>新年ということでMiddleMan + GitHub Pagesでブログを構築しました！
-これから随時更新していきます(^o^)  </p>
+			<div id="articleBody">
+				<p>新年ということでMiddleMan + GitHub Pagesでブログを構築しました！</p>
+
+<p>これから随時更新していきます(^o^)  </p>
 
 <p>今日はjQuery Deferredについて書きます。  </p>
 
 <p>jQuery Deferredってそもそも何かということについては、以下のサイトが一番わかりやすくまとめられてます。  </p>
 
-<p><a href="http://qiita.com/yuku_t/items/1b8ce6bba133a7eaeb23">結局jQuery.Deferredの何が嬉しいのか分からない、という人向けの小話</a>  </p>
+<p><a href="http://qiita.com/yuku_t/items/1b8ce6bba133a7eaeb23">結局jQuery.Deferredの何が嬉しいのか分からない、という人向けの小話</a></p>
 
 <p>ここではFacebookページの投稿に対するいいね・コメント・シェア数をAjaxで取得して全部取得したら表示する…的なことを書いています。</p>
 
@@ -62,54 +62,58 @@
 
 <p>のように処理の回数が一定のものしか載っていなかったので、$.eachなどでループさせるなどリクエスト数が可変の際に実現する方法を調べました。  </p>
 
-<p>$.when.apply($, promises)
+<pre>
+$.when.apply($, promises)
   .done(function() {
        // do successed
   })
   .fail(function() {
        // do failed
-  });</p>
+  });
+</pre>
 
 <p>それがここの部分。  </p>
 
-<p>applyは第一引数にapplyを実行する関数を呼び出すthis参照値を渡し、
-第二引数に配列を渡すと、渡した配列を引数にapplyを実行した関数を呼び出してくれる…らしい(笑)  </p>
+<p>applyは第一引数にapplyを実行する関数を呼び出すthis参照値を渡し、</p>
 
-<p>$.when.apply($, [deferred, deferred])
+<p>第二引数に配列を渡すと、渡した配列を引数にapplyを実行した関数を呼び出してくれる…らしい(笑)  </p>
+
+<pre>
+$.when.apply($, [deferred, deferred])
   .done(function() {
        // do successed
   })
   .fail(function() {
        // do failed
-  });</p>
+  });
+</pre>
 
-<p>つまり、第二引数にループして返ってきたdeferredオブジェクトの配列を突っ込めば、
-任意の数のリクエストでも対応できます！便利！  </p>
+<p>つまり、第二引数にループして返ってきたdeferredオブジェクトの配列を突っ込めば、</p>
 
-<p>あとjQueryはresolveした時に渡した引数をリクエストした順番に、
-$.whenのコールバックで受け取るというようなことが出来ないみたいなので、  </p>
+<p>任意の数のリクエストでも対応できます！便利！  </p>
+
+<p>あとjQueryはresolveした時に渡した引数をリクエストした順番に、</p>
+
+<p>$.whenのコールバックで受け取るというようなことが出来ないみたいなので、  </p>
 
 <p>resultsという配列に保存して渡してあげてます。  </p>
 
 <p>もっと良い書き方とかあったら教えて下さい！  </p>
 
 <p>以上です :)</p>
- 
-          </div>
+      
+			</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
 
-          
-<div class="article-social" style="text-align: left;">
-	<iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html" data-text="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
 
-	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html" data-text="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-	</script>
-
-	<a href="http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html" class="hatena-bookmark-button" data-hatena-bookmark-title="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
-	<script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="http://gold-experience.jp/articles/2014/01/02/jQueryDeferred.html" class="hatena-bookmark-button" data-hatena-bookmark-title="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
-          <hr />                   
-          <div id="disqus_thread"></div>
+			<div id="disqus_thread"></div>
             <script type="text/javascript">
             //<![CDATA[
                 (function() {
@@ -122,7 +126,6 @@ $.whenのコールバックで受け取るというようなことが出来な�
             <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
             <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
         </script>
-
         </div><!--LeftContent-->
       </div><!--container-->
     </div><!--Content-->

@@ -42,3 +42,7 @@ a:hover {
 .twitter-share-button {
     width: 78px !important;
 }
+
+#disqus_thread {
+	margin-top: 30px;
+}
