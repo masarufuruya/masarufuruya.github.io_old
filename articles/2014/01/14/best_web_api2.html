@@ -1,0 +1,220 @@
+ <!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <link href="/stylesheets/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/bootstrap-theme.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/gold-experience.css" media="screen" rel="stylesheet" type="text/css" / >
+  <meta name="keywords" content="api,REST,web api"><!-- keywords変数の値を表示 -->
+  <meta name="description" content="開発者に優しいREST APIを書く方法(2)"><!-- description変数の値を表示 -->  
+</head>
+<body>
+  <div id="header" class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  </div><!-- /header --> 
+
+
+    <div id="Content" class="row">
+      <div class="container">
+        <div id="LeftContent" class="col-xs-12">
+			<h2><a style="color:#333" href="http://gold-experience.jp">黄金体験</a></h2>
+<p><a style="color:#333;" href="http://gold-experience.jp">〜刺激あふれる毎日を過ごしたいエンジニアのブログ〜</a></p>
+<hr/>
+
+			<div class="article-header">
+    <h3>
+      <a href="/articles/2014/01/14/best_web_api2.html">開発者に優しいREST APIを書く方法(2)</a>
+    </h3>
+	<p style="margin-top:15px;margin-bottom:30px;">
+    	<span>2014年01月14日</span>
+    </p>
+</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/14/best_web_api2.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/14/best_web_api2.html" data-text="開発者に優しいREST APIを書く方法(2)" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/01/14/best_web_api2.html" class="hatena-bookmark-button" data-hatena-bookmark-title="開発者に優しいREST APIを書く方法(2)" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="articleBody">
+				<p>前回の<a href="http://gold-experience.jp/articles/2014/01/09/best_web_api.html">開発者に優しいREST APIを書く方法</a>に引き続き、</p>
+
+<p>APIを書く時に注意すべきTipsをまとめていきます。</p>
+
+<p>前回は、REST・HTTPメソッドと以下の3つのTipsについて解説しました。</p>
+
+<pre>
+1. Keep verbs out of your base URLs.(ベースURLからは動詞を排除する)
+
+2. Use two base URLs per resource.(リソースごとのベースURLは2つまでとする)
+
+3. Use HTTP verbs to operate on the collections and elements.(HTTPメソッドを使ってリソースを操作する)
+</pre>
+
+<p>今回は前回同様、リソースの扱い方と最後はエラーハンドリングについて少し触れます。</p>
+
+<h3 id="section">今回のトピックス</h3>
+
+<pre>
+4. Concreate name are better than abstract(具体的な名前の方が良い)
+
+5. Simplify associations(アソシエーションはシンプルにする)
+
+6. use HTTP status code(HTTPのステータスコードを使う)
+</pre>
+
+<h3 id="concreate-name-are-better-than-abstract">4. Concreate name are better than abstract(具体的な名前の方が良い)</h3>
+
+<p>良い例</p>
+<pre>
+news, articles, movies
+</pre>
+
+<p>悪い例</p>
+<pre>
+items,assets
+</pre>
+
+<p>これはわかっているつもりでも、疎かにしてしまいがちな点ですね。</p>
+
+<p>重要なのは「何の処理をするものか一目でわかること」です。</p>
+
+<p>items,assetsでは具体的に取得するデータがわかりません。</p>
+
+<p>コーディングする時は時間が無くても一歩立ち止まって命名をしっかり考える癖をつけましょう。</p>
+
+<p>後で自分のコードを読み返した時に、過去の自分に感謝するはず笑</p>
+
+<h3 id="simplify-associations">5. Simplify associations(アソシエーションはシンプルにしよう)</h3>
+
+<p>アソシエーションとは、「リソース間の関係」を表します。</p>
+
+<p>CakePHPなどのフレームワークではモデル間の関係を表すのに使われますね。</p>
+
+<p>シンプルでは無いアソシエーションとは、例えば以下のようなものです。</p>
+
+<pre>
+ex1:
+/owners/1234/dogs
+</pre>
+
+<p>これは、1234というIDのオーナーが飼っている犬の一覧を取得することを意味しています。</p>
+
+<p>これだと取得したいリソース分URLが長くなります。</p>
+
+<p>/resource/identifier/resource/identifier/resource …</p>
+
+<pre>
+ex2:
+/dogs?color=red&amp;state=running&amp;location=park
+</pre>
+
+<p>ex2は、色が「赤」で、場所は「公園」で、「走っている」犬の情報を取得することを意味しています。</p>
+
+<p>こういった形式だとURLも長くなりますし、直感的に何が取得できるのかわからず好ましくありません。</p>
+
+<p>ex1であれば、</p>
+
+<p>/dogs というエンドポイントを別に用意しておいて、</p>
+
+<p>/dogs/owner_id</p>
+
+<p>で特定のオーナーが飼っている犬の一覧を得られるようにしておくべきです。</p>
+
+<p>そして色、状態、場所といった属性は、犬というリソースが持っている状態で返すといいと思います。</p>
+
+<h3 id="use-http-status-codehttp">6. use HTTP status code(HTTPのステータスコードを使う)</h3>
+
+<p>アプリ開発者にとって、APIが返すエラーコードはとても重要です。</p>
+
+<p>その値を使って、クライアント側 or サーバー側でエラーハンドリングを行うからです。</p>
+
+<p>では、まず何をエラーコードとして返すべきか？</p>
+
+<p>それが、</p>
+
+<pre>
+use HTTP status code(HTTPのステータスコードを使う)
+</pre>
+
+<p>というわけです。</p>
+
+<p>でも、HTTPのステータスコードは全てで70個を超える種類があります。</p>
+
+<p>いくらベテランのエンジニアでもその全てを覚えることは至難の技でしょう。</p>
+
+<p>むしろ、そんな多くのステータスの条件分岐が書かれたコードは可読性も悪くなって新たなバグを生む可能性があります。</p>
+
+<p>そこで、Web API Designで提唱されているのがまず、</p>
+
+<pre>
+「3つのステータスコードを返すことから始める」
+</pre>
+
+<p>ことです。</p>
+
+<p>その3つのステータスコードとは、</p>
+
+<pre>
+200-OK:成功
+
+400 - Bad Request:クライアントによるエラー
+
+500 - Internal Server Error:サーバー側のエラー
+</pre>
+
+<p>です。</p>
+
+<p>上記の3つが適切にレスポンスとして返ってくれば、</p>
+
+<p>一目でどんな状態か区別できていいですね。</p>
+
+<p>今回はほんの触りになってしまったので、</p>
+
+<p>次回はエラーハンドリングのTipsについてがっつり解説していきたいと思います。</p>
+
+<p>以上です！</p>
+
+<h3 id="section-1">参考資料はこちら</h3>
+
+<p><a href="http://info.apigee.com/Portals/62317/docs/web%20api.pdf">Web API Design Crafting Interfaces that Developers Love</a></p>
+
+      
+			</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/14/best_web_api2.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/14/best_web_api2.html" data-text="開発者に優しいREST APIを書く方法(2)" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/01/14/best_web_api2.html" class="hatena-bookmark-button" data-hatena-bookmark-title="開発者に優しいREST APIを書く方法(2)" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//gold-experience-masaru.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+        </div><!--LeftContent-->
+      </div><!--container-->
+    </div><!--Content-->
+
+		<div id="footer" class="container"></div>
+	</body>
+</html>
