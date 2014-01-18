@@ -60,19 +60,21 @@
 
 <p>以前のバージョンのrubyにrbenvで戻す方法を調べた。</p>
 
-<h3 id="ruby">まず、インストールしてあるrubyを調べる</h3>
+<h3 id="ruby">インストールされているrubyのバージョンを調べる</h3>
 
 <pre>
 $ rbenv versions
 </pre>
+
+<p>以下のような結果が表示されます。</p>
+
+<p>今選択されているバージョンには * がついています。</p>
 
 <pre>
   system
   1.9.3-p194
 * 2.0.0-p0 (set by ~/.rbenv/version)
 </pre>
-
-<p>今選択されているバージョンには * がついています。</p>
 
 <h3 id="ruby-1">rubyのバージョンを変更する</h3>
 
@@ -88,10 +90,11 @@ $ rbenv global 1.9.3-p194
 
 <pre>
 $ rbenv global
+</pre>
 
-1.9.3-p194 と表示されればOK
+<p>1.9.3-p194 と表示されればOK</p>
 
-### インストール可能なrubyのバージョンを表示
+<h3 id="ruby-2">インストール可能なrubyのバージョンを表示</h3>
 
 <pre>
 $ rbenv install -l
@@ -176,13 +179,16 @@ $ rbenv install -l
   topaz-dev 
 </pre>
 
+<p>そして、下記コマンドでインストールしたいバージョンを指定してインストールします。</p>
+
+<pre>
 $ rbenv install インストールしたいバージョンを指定
-
-以上のようにすれば、任意のバージョンのrubyをインストールすることも出来ます。
-
-では本日は以上です！
-
 </pre>
+
+<p>以上のようにすれば、任意のバージョンのrubyをインストールすることも出来ます。</p>
+
+<p>以上です！</p>
+
       
 			</div>
 			<div class="article-social" style="text-align: left;">

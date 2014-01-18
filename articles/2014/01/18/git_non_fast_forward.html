@@ -1,0 +1,137 @@
+ <!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <link href="/stylesheets/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/bootstrap-theme.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/gold-experience.css" media="screen" rel="stylesheet" type="text/css" / >
+  <meta name="keywords" content="rbenv,ruby"><!-- keywords変数の値を表示 -->
+  <meta name="description" content="rbenvを利用して複数バージョンのRubyを切り替える"><!-- description変数の値を表示 -->  
+</head>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47159574-1', 'gold-experience.jp');
+  ga('send', 'pageview');
+
+</script>
+<body>
+  <div id="header" class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  </div><!-- /header --> 
+
+
+    <div id="Content" class="row">
+      <div class="container">
+        <div id="LeftContent" class="col-xs-12">
+			<h2><a style="color:#333" href="http://gold-experience.jp">黄金体験</a></h2>
+<p><a style="color:#333;" href="http://gold-experience.jp">〜刺激あふれる毎日を過ごしたいエンジニアのブログ〜</a></p>
+<hr/>
+
+			<div class="article-header">
+    <h3>
+      <a href="/articles/2014/01/18/git_non_fast_forward.html">Non-Fast-Forwardって結局何？という人向けのまとめ</a>
+    </h3>
+	<p style="margin-top:15px;margin-bottom:30px;">
+    	<span>2014年01月18日</span>
+    </p>
+</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/18/git_non_fast_forward.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/18/git_non_fast_forward.html" data-text="Non-Fast-Forwardって結局何？という人向けのまとめ" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/01/18/git_non_fast_forward.html" class="hatena-bookmark-button" data-hatena-bookmark-title="Non-Fast-Forwardって結局何？という人向けのまとめ" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="articleBody">
+				<p>最近、マージでミスをして他人のコードを消してしまい自分のGit力の低さに</p>
+
+<p>身の危険を感じたので改めてGitを勉強し直しました。</p>
+
+<p>今回はまず、Fast-ForwardとNon-Fast-Forwardの違いについてまとめたいと思います。</p>
+
+<h3 id="fast-forward">Fast Forwardとは？</h3>
+
+<p>ある時点でmasterブランチからブランチAが出来たとします。その後、ブランチAでコミットをしていきます。</p>
+
+<p>// 画像</p>
+
+<p>ブランチAで作業している間、masterブランチでは全く変更が行われていないとします。</p>
+
+<p>この状態ならブランチAをmasterブランチに安全にマージすることが出来ます。</p>
+
+<p>ブランチAでコミットした内容をmasterブランチにもコミットすればいいだけなので。</p>
+
+<p>ただ、実際にはFast ForwardマージとはブランチAでコミットした内容を再度コミットするようなことはしません。</p>
+
+<p>単にmasterブランチの先頭をブランチAの先頭へポインタするように変更するだけです。</p>
+
+<p>これが、Fast Forward マージです。</p>
+
+<h3 id="non-fast-forward">Non Fast Forwardとは？</h3>
+
+<p>これに対して、Non Fast Forwardとは、、</p>
+
+<p>// 画像</p>
+
+<p>ブランチAが変更されている間、masterブランチも変更されている場合</p>
+
+<p>この場合は、ただ単にポインタを移動するだけでは変更内容を取り込むことは出来ません。</p>
+
+<p>masterブランチとブランチAで変更された内容をそれぞれ活かしたまま、</p>
+
+<p>それらをマージして新たな合流地点をつくる、それがNon Fast Forwardマージになります。</p>
+
+<h3 id="section">ローカルブランチの変更箇所をプッシュする前にリモートブランチが変更された場合</h3>
+
+<p>この状態でローカルのコミットをプッシュしようとすると、</p>
+
+<p>Fast Forward Push</p>
+
+<p>Non Fast Forward Push</p>
+
+<p>テスト用のリポジトリ
+https://github.com/masarufuruya/nonFastForward</p>
+
+      
+			</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/18/git_non_fast_forward.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/18/git_non_fast_forward.html" data-text="Non-Fast-Forwardって結局何？という人向けのまとめ" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/01/18/git_non_fast_forward.html" class="hatena-bookmark-button" data-hatena-bookmark-title="Non-Fast-Forwardって結局何？という人向けのまとめ" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//gold-experience-masaru.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+        </div><!--LeftContent-->
+      </div><!--container-->
+    </div><!--Content-->
+
+		<div id="footer" class="container"></div>
+	</body>
+</html>
