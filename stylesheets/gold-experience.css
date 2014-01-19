@@ -34,6 +34,26 @@ a:hover {
 	margin-bottom: 40px;
 }
 
+#articleBody .article-image {
+	margin-top: 20px !important;
+	margin-bottom: 20px !important;
+}
+
+#articleBody .app-introduce {
+	height: 150px;
+	margin-top: 25px;
+}
+
+#articleBody .app-image {
+	float: left;
+	margin-right: 10px;
+}
+
+#articleBody .app-right {
+	padding-left: 85px;
+	padding-top: 20px;
+}
+
 .container {
 	max-width: none !important;
 	width: 970px;
