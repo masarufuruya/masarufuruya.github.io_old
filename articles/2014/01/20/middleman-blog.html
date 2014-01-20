@@ -1,0 +1,176 @@
+ <!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <link href="/stylesheets/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/bootstrap-theme.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/gold-experience.css" media="screen" rel="stylesheet" type="text/css" / >
+  <meta name="keywords" content="Middleman,Github Pages,ブログ,Middleman + Github"><!-- keywords変数の値を表示 -->
+  <meta name="description" content="たった10分！Middelman+GithubPagesを使ってブログを始めてみよう"><!-- description変数の値を表示 -->  
+</head>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47159574-1', 'gold-experience.jp');
+  ga('send', 'pageview');
+
+</script>
+<body>
+  <div id="header" class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  </div><!-- /header --> 
+
+
+    <div id="Content" class="row">
+      <div class="container">
+        <div id="LeftContent" class="col-xs-12">
+			<h2><a style="color:#333" href="http://gold-experience.jp">黄金体験</a></h2>
+<p><a style="color:#333;" href="http://gold-experience.jp">〜毎日刺激あふれる豊かな人生を送りたいエンジニアのブログ〜</a></p>
+<hr/>
+
+			<div class="article-header">
+    <h3>
+      <a href="/articles/2014/01/20/middleman-blog.html">たった10分！Middelman+GithubPagesを使ってブログを始めてみよう</a>
+    </h3>
+	<p style="margin-top:15px;margin-bottom:30px;">
+    	<span>2014年01月20日</span>
+    </p>
+</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/20/middleman-blog.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/20/middleman-blog.html" data-text="たった10分！Middelman+GithubPagesを使ってブログを始めてみよう" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/01/20/middleman-blog.html" class="hatena-bookmark-button" data-hatena-bookmark-title="たった10分！Middelman+GithubPagesを使ってブログを始めてみよう" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="articleBody">
+				<div class="imageRow" style="margin-bottom: 55px;">
+	<div style="margin-left:20px;float:left;height:280px;margin-right:25px;"> 
+		<a href="http://500px.com/photo/58418128">
+	  	<img src="http://ppcdn.500px.org/58418128/c1e7064010f4072135749e461d81d71256fede40/3.jpg
+	" alt="Middleman" border="0" style="margin: 0 0 5px 0;" />
+		</a>
+	</div>
+
+	<div style="margin-left:20px;">
+		<a href="http://500px.com/photo/58418724">
+	  	<img src="http://ppcdn.500px.org/58418724/b2a4330f3331a8bf90609469fe632627c3a1debf/3.jpg
+		" alt="Github Pages" border="0" style="margin: 0 0 5px 0;" />
+		</a>
+	</div>
+</div>
+
+<p>最近、ブログを作る方法を聞かれることが何度かあったので、</p>
+
+<p>本ブログの構成であるMiddleman + Github Pagesを使ったブログの構築手順をまとめたいと思います。</p>
+
+<p>Middleman,Github Pagesに関する詳しい説明は省きます。</p>
+
+<h3 id="githubgithub-pages">GithubにGithub Pages用のリポジトリを作成する</h3>
+
+<p>まず、<a href="https://github.com">Github</a>へログインして、自分のユーザーネーム.github.ioというリポジトリを作成します。</p>
+
+<p>作成が完了したら、リポジトリの設定画面にGithub Pagesという項目があるので、</p>
+
+<p>ここの[Automatic Page Generator]というボタンをクリックします。</p>
+
+<p>すると、勝手にGithub上にサイトがホスティングされるようになります。</p>
+
+<p>http://username.github.ioにアクセスするとサイトにアクセスできます。</p>
+
+<h3 id="middleman">Middlemanをインストール</h3>
+
+<p>次に静的ジェネレータであるMiddlemanをMacにインストールします。</p>
+
+<pre>
+$ gem install middleman
+</pre>
+
+<h3 id="section">プロジェクトフォルダをつくる</h3>
+
+<p>まずは適当な場所にMiddlemanのプロジェクトフォルダを作成します。</p>
+
+<pre>
+middleman init blog
+</pre>
+
+<p>作成したプロジェクトフォルダへ移動します。</p>
+
+<pre>
+cd blog
+</pre>
+
+<h3 id="section-1">リモートリポジトリを登録する</h3>
+
+<pre>
+git init
+git remote add origin git@github.com:username/username.github.io.git
+</pre>
+
+<p>ちゃんと登録出来たか確認するには、以下のコマンドを使います。</p>
+
+<pre>
+git remote -v
+</pre>
+
+<p>これでMiddlemanで作成したファイルをGitで管理して、</p>
+
+<p>プッシュすればGithubPagesに公開できるようになります。</p>
+
+<h3 id="section-2">ローカルサーバーで動作を確認する</h3>
+
+<p>いちいちプッシュせずに、ローカルでサイトの作成状況を確認したいという場合には、</p>
+
+<p>以下コマンドでmiddlemanサーバーを立ち上げて確認します。</p>
+
+<pre>
+bundle exec middleman server
+</pre>
+
+<p>http://0.0.0.0:4567にアクセスすると、middlemanが立ち上がっているのがわかると思います。</p>
+
+<p>後はMiddlemanとBootstrapを活用してサイトを構築していくだけでサクッとブログを立ち上げることが出来ます。</p>
+
+<p>次回は具体的なMiddelmanの使い方などを紹介したいと思います。</p>
+      
+			</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/01/20/middleman-blog.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/01/20/middleman-blog.html" data-text="たった10分！Middelman+GithubPagesを使ってブログを始めてみよう" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/01/20/middleman-blog.html" class="hatena-bookmark-button" data-hatena-bookmark-title="たった10分！Middelman+GithubPagesを使ってブログを始めてみよう" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//gold-experience-masaru.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+        </div><!--LeftContent-->
+      </div><!--container-->
+    </div><!--Content-->
+
+		<div id="footer" class="container"></div>
+	</body>
+</html>
