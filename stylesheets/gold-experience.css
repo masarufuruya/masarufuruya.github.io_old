@@ -49,6 +49,11 @@ a:hover {
 	margin-right: 10px;
 }
 
+#articleBody .post-image {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
 #articleBody .app-right {
 	padding-left: 85px;
 	padding-top: 20px;
