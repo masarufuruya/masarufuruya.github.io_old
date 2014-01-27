@@ -67,20 +67,6 @@ a:hover {
 	margin-bottom: 55px;	
 }
 
-.article-list .catch-image1 {
-	height: 0px !important;
-}
-
-.catch-image1{
-	float:left;
-	height:280px;
-	margin-right:25px;
-}
-
-.catch-image2 {
-	margin-left:20px;	
-}
-
 #disqus_thread {
 	margin-top: 30px;
 }
