@@ -59,10 +59,26 @@ a:hover {
 	padding-top: 20px;
 }
 
-
-
 .twitter-share-button {
     width: 78px !important;
+}
+
+.catch-image-row {
+	margin-bottom: 55px;	
+}
+
+.article-list .catch-image1 {
+	height: 0px !important;
+}
+
+.catch-image1{
+	float:left;
+	height:280px;
+	margin-right:25px;
+}
+
+.catch-image2 {
+	margin-left:20px;	
 }
 
 #disqus_thread {
