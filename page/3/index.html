@@ -10,8 +10,8 @@
   <link href="/stylesheets/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="/stylesheets/bootstrap-theme.min.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="/stylesheets/gold-experience.css" media="screen" rel="stylesheet" type="text/css" / >
-  <meta name="keywords" content="rbenv,ruby"><!-- keywords変数の値を表示 -->
-  <meta name="description" content="rbenvを利用して複数バージョンのRubyを切り替える"><!-- description変数の値を表示 -->  
+  <meta name="keywords" content="deferred,$.when"><!-- keywords変数の値を表示 -->
+  <meta name="description" content="任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について"><!-- description変数の値を表示 -->  
 </head>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -40,140 +40,94 @@
 
   <article class="article-list">
     <h3>
-      <a href="/articles/2014/02/02/mongo_db.html">Mongo DBの基本的なコマンドまとめ</a>
+      <a href="/articles/2014/01/10/jquery-first.html">JQueryを使った非同期処理入門 (1)</a>
     </h3>
 	<p style="margin-top:15px;margin-bottom:30px;">
-    	<span>2014年02月02日</span>
+    	<span>2014年01月10日</span>
     </p>
 
-    <p>先週、日本に帰国してからバタバタしていてブログの更新が疎かになっていたので</p>
+    <p>最近のアプリでは、非同期処理ガンガン書きますね。</p>
 
-<p>また更新していきます。</p>
+<p>私は新しい技術を学ぶ時はよくドットインストールでまず勉強します。</p>
 
-<p>今日は技術ネタということでMongo DBの基本的なコマンドのまとめ。</p>
+<p>ドットインストールは教材の画面にメモ欄があってそこに自分だけのちょっとしたメモを残したり出来ます。</p>
 
-<h3 id="section">起動 &amp; 終了</h3>
+<p>これも非同期処理を利用して画面遷移せずにサーバー側のデータを書き換えて実現しています。</p>
 
-<p>起動</p>
+<p>この例のように、単純にテキストボックスの変更内容を更新するようなプログラムであれば</p>
 
-<pre>
-$ mongo
-</pre>
-
-<p>終了</p>
-
-<pre>
-&gt; exit
-</pre>
-
-<h3 id="section-1">データベースの操作</h3>
-
-<p>DBの一覧表示</p>
-
-<pre>
-&gt; show dbs;
-test (empty)
-localhost (empty)
-</pre>
-
-<p>DBの選...</p>
-
-    <a href="/articles/2014/02/02/mongo_db.html">続きを読む</a>
+    <a href="/articles/2014/01/10/jquery-first.html">続きを読む</a>
   </article>
   <article class="article-list">
     <h3>
-      <a href="/articles/2014/01/23/google-map.html">旅行先の共有に便利！Googleマイプレイスの機能をご紹介</a>
+      <a href="/articles/2014/01/09/best_web_api.html">開発者に優しいREST APIを書く方法</a>
     </h3>
 	<p style="margin-top:15px;margin-bottom:30px;">
-    	<span>2014年01月23日</span>
+    	<span>2014年01月09日</span>
     </p>
 
-    <p>旅行に行く時に非常に便利なサービス、Googleから提供されているGoogleマイプレイスという機能をご存知でしょうか。</p>
+    <p>最近、Ajaxでリクエストを投げてAPIでレスポンスを返すという処理をよく書いていて、</p>
 
-<p>観光地や穴場スポットを事前に登録しておけば、初めて行く場所でも迷わずに行けてとても便利。</p>
+<p>人によってはget〜というメソッド名なのに、データを取ってくる以外の処理がたくさん書いてあって</p>
 
-<p>友達との事前共有も簡単にできます。おすすめです。</p>
+<p>「これはいったい何の処理をしたいメソッドなのだろうか？」</p>
 
-<h3 id="section">マイプレイスの紹介</h3>
+<p>と思うことがしばしばあったので、自戒の意味もこめて開発者に優しいAPIの書き方について書きます。</p>
 
-<p>Googleマイプレイスとは、一言で言うと「Googleマップ上に自分だけの地図を作成できる」サービスで...</p>
+<p>本記事では、以下の資料で勉強した内容をまとめて...</p>
 
-    <a href="/articles/2014/01/23/google-map.html">続きを読む</a>
+    <a href="/articles/2014/01/09/best_web_api.html">続きを読む</a>
   </article>
   <article class="article-list">
     <h3>
-      <a href="/articles/2014/01/22/vietammm.html">ベトナムで宅配ピザを頼んだらこうなった！</a>
+      <a href="/articles/2014/01/03/Rails4_install.html">MacOS MavericksにRails4 + Ruby2.0を構築する方法</a>
     </h3>
 	<p style="margin-top:15px;margin-bottom:30px;">
-    	<span>2014年01月22日</span>
+    	<span>2014年01月03日</span>
     </p>
 
-    <p>ベトナムで宅配ピザを食べたい！！という方にオススメのサービスをご紹介します。</p>
+    <p>2014年1月3日現在、Railsの最新版は4.0系です。</p>
 
-<p><a href="http://www.vietnammm.com/jp/">Vietnammm.com ORDER FOOD ONLINE IN VIETNAM</a></p>
+<p>Rails3.2以降はRuby1.8系はサポートされないようで、公式サイトでは
+Ruby2.0を推奨しています。</p>
 
-<p>ベトナムで料理の出前をお願いしたい！だけど、ベトナム語で電話が出来ない。そんな人向けのサービス。</p>
+<p>MacOS MavericksではデフォルトでRuby1.92系がインストールされているので、
+brewを使ってRuby2.0 + Rails4.0を構築してみます。</p>
 
-<p>私みたいに入力内容に不足が無ければ、全てWebで注文を完結させることが出来ます。</p>
+<p>今回、下記のリンクを参考にしました 。 </p>
 
-<h3 id="section">四ヶ国語に対応</h3>
+<p><a href="http://t.nzk.me/entry/2013/05/16/144817">Mountain...</a></p>
 
-<p>Vietnammは2014...</p>
-
-    <a href="/articles/2014/01/22/vietammm.html">続きを読む</a>
+    <a href="/articles/2014/01/03/Rails4_install.html">続きを読む</a>
   </article>
   <article class="article-list">
     <h3>
-      <a href="/articles/2014/01/20/middleman-blog.html">たった10分！Middelman+GithubPagesを使ってブログを始めてみよう</a>
+      <a href="/articles/2014/01/02/jQueryDeferred.html">任意の数のDeferredオブジェクトを$.whenの引数に渡す方法について</a>
     </h3>
 	<p style="margin-top:15px;margin-bottom:30px;">
-    	<span>2014年01月20日</span>
+    	<span>2014年01月02日</span>
     </p>
 
-    <p>最近、ブログを作る方法を聞かれることが何度かあったので、</p>
+    <p>新年ということでMiddleMan + GitHub Pagesでブログを構築しました！</p>
 
-<p>本ブログの構成であるMiddleman + Github Pagesを使ったブログの構築手順をまとめたいと思います。</p>
+<p>これから随時更新していきます(^o^)  </p>
 
-<p>Middleman,Github Pagesに関する詳しい説明は省きます。</p>
+<p>今日はjQuery Deferredについて書きます。  </p>
 
-<h3 id="githubgithub-pages">GithubにGithub Pages用のリポジトリを作成する</h3>
+<p>jQuery Deferredってそもそも何かということについては、以下のサイトが一番わかりやすくまとめられてます。  </p>
 
-<p>まず、<a href="https://github.com">Github</a>へログインして、自分のユーザーネーム.github.io...</p>
+<p><a href="http://qiita.com/yuku_t/items/1b8ce6bba133a7eaeb23">結局jQuery.Deferredの何が嬉しいのか分からない、という人...</a></p>
 
-    <a href="/articles/2014/01/20/middleman-blog.html">続きを読む</a>
-  </article>
-  <article class="article-list">
-    <h3>
-      <a href="/articles/2014/01/18/rbenv_ruby.html">rbenvを使って複数バージョンのRubyを切り替える</a>
-    </h3>
-	<p style="margin-top:15px;margin-bottom:30px;">
-    	<span>2014年01月18日</span>
-    </p>
-
-    <p>以前の記事、<a href="http://gold-experience.jp/articles/2014/01/03/Rails4_install.html">MacOS MavericksにRails4 + Ruby2.0を構築する方法</a>で、</p>
-
-<p>ruby2.0.0-p0をインストールしたら、開発で利用していたresque-webが動かなくなったので</p>
-
-<p>以前のバージョンのrubyにrbenvで戻す方法を調べた。</p>
-
-<h3 id="ruby">インストールされているrubyのバージョンを調べる</h3>
-
-<pre>
-$ rbenv versions
-</pre>
-
-<p>以下のような結果が表示されます。</p>
-
-    <a href="/articles/2014/01/18/rbenv_ruby.html">続きを読む</a>
+    <a href="/articles/2014/01/02/jQueryDeferred.html">続きを読む</a>
   </article>
  
 
 <div id="Paginator" class="clearfix">
     
-        <div class="prev" style="float:left;margin-top:15px;">
-        <a href="/page/2/">← 前のページ</a>
-        </div>
     
+        <div class="next" style="float:right;margin-top:15px;">
+        <a href="/page/2/">次のページ →</a>
+        </div>
     
 </div>
           
