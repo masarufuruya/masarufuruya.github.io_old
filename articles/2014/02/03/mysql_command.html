@@ -1,0 +1,227 @@
+ <!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+  <title>黄金体験</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <link href="/stylesheets/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/bootstrap-theme.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/gold-experience.css" media="screen" rel="stylesheet" type="text/css" / >
+  <meta name="keywords" content="ORマッパー,MySQL"><!-- keywords変数の値を表示 -->
+  <meta name="description" content="ORマッパー脳のためのMySQLコマンド入門"><!-- description変数の値を表示 -->  
+</head>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47159574-1', 'gold-experience.jp');
+  ga('send', 'pageview');
+
+</script>
+<body>
+  <div id="header" class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  </div><!-- /header --> 
+
+
+    <div id="Content" class="row">
+      <div class="container">
+        <div id="LeftContent" class="col-xs-12">
+			<h2><a style="color:#333" href="http://gold-experience.jp">黄金体験</a></h2>
+<p><a style="color:#333;" href="http://gold-experience.jp">〜毎日刺激あふれる豊かな人生を送りたいエンジニアのブログ〜</a></p>
+<hr/>
+
+			<div class="article-header">
+    <h3>
+      <a href="/articles/2014/02/03/mysql_command.html">NoSQL脳のためのSQLクエリー入門</a>
+    </h3>
+	<p style="margin-top:15px;margin-bottom:30px;">
+    	<span>2014年02月03日</span>
+    </p>
+</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/02/03/mysql_command.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/02/03/mysql_command.html" data-text="NoSQL脳のためのSQLクエリー入門" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/02/03/mysql_command.html" class="hatena-bookmark-button" data-hatena-bookmark-title="NoSQL脳のためのSQLクエリー入門" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="articleBody">
+				<p>Ruby on Railsなどの高機能なフレームワークが普及し、</p>
+
+<p>SQLを必要としないニュータイプ(NoSQL脳)を持つ人類が増えてきた現代。</p>
+
+<p>ただ未だ複雑な処理をする時は、SQLを利用する機会もけっこうあります。</p>
+
+<p>ここでは、よく使うSQLクエリーをまとめました。(MySQLのみ)</p>
+
+<p>たまに書くとけっこう忘れてますよね。。</p>
+
+<h3 id="mysql">MySQLのユーザー一覧を確認</h3>
+
+<pre>
+&gt;select host,user from mysql.user
+</pre>
+
+<h3 id="section">バージョン確認</h3>
+
+<pre>
+&gt;select version()
+</pre>
+
+<h3 id="section-1">テーブルを作成</h3>
+
+<pre>
+create table if not exists users(
+	user_id INT AUTO_INCREMENT,
+	password VARCHAR(30) NOT NULL,
+	name VARCHAR(140) NOT NULL,
+	regist_date TIMESTAMP NOT NULL,
+	PRIMARY KEY(user_id)
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+</pre>
+
+<h3 id="section-2">テーブル削除</h3>
+
+<pre>
+&gt;drop table [テーブル名]
+</pre>
+
+<h3 id="section-3">データ検索</h3>
+
+<pre>
+&gt;select * from [テーブル名];
+&gt;select * FROM [テーブル名] WHERE UID='hogehoge';
+&gt;select * FROM [テーブル名] WHERE MESSAGE LIKE 'hoge%';
+</pre>
+
+<p>IN句</p>
+
+<pre>
+&gt;select CM.club_name from Club_Master as CM where club_id 
+in(select UJ.club_id from User_Master as UM inner join User_Join_Club as UJ on UM.user_id = UJ.user_id)
+</pre>
+
+<p>JOIN句</p>
+
+<pre>
+&gt;select UM.user_name from User_Master as UM
+inner join User_Join_Club as UJ on UM.user_id = UJ.user_id
+inner join Club_Master as CM on UJ.club_id = CM.club_id
+</pre>
+
+<h3 id="section-4">データ挿入</h3>
+
+<pre>
+&gt;insert into [テーブル名]
+('user_id','name')
+values('1','hogehoge');
+</pre>
+
+<h3 id="section-5">データ更新</h3>
+
+<pre>
+update [テーブル名] set
+name='hogehoge' where uid='1000';
+</pre>
+
+<h3 id="section-6">データ削除</h3>
+
+<pre>
+delete from [テーブル名] where uid='1000';
+</pre>
+
+<h3 id="section-7">テーブルを削除(キー番号もリセットする)</h3>
+<pre>
+truncate table [テーブル名]
+</pre>
+
+<h3 id="section-8">データベースのバックアップをとる</h3>
+
+<pre>
+mysqldump -u [ユーザー名] -p データベース名 &gt; [ファイル名]
+</pre>
+
+<h3 id="section-9">特定のテーブルをダンプする</h3>
+
+<pre>
+mysqldump -u [ユーザー名] -p [データベース名] [テーブル名] &gt; [ファイル名]
+</pre>
+
+<h3 id="sql">SQLを既存のデータベースにインポートする</h3>
+
+<pre>
+mysql -u [ユーザー名] -p [データベース名] &lt; [ファイル名]
+</pre>
+
+<h3 id="section-10">既存のテーブル名の変更</h3>
+
+<pre>
+&gt;alter table [テーブル名] rename as [新テーブル名]
+</pre>
+
+<h3 id="section-11">既存の列の構造(列名、型、制約)を変更</h3>
+
+<pre>
+&gt;alter table [テーブル名] change column [既存の列名] [新しい列名] [型名] [制約]
+</pre>
+
+<h3 id="section-12">テーブルの構造を表示</h3>
+
+<pre>
+describe テーブル名
+</pre>
+
+<h3 id="section-13">データベースと接続用ユーザーの作成</h3>
+
+<pre>
+&gt;create database [データベース名];
+&gt;grant all on [データベース名].[テーブル名] to root@localhost identified by 'hogehoge'; 
+</pre>
+
+<h3 id="section-14">データベースの削除</h3>
+<pre>
+&gt;drop database [データベース名]
+</pre>
+
+<p>サブクエリの使い方などSQLを久しぶりに使う人にとってよくつまずくものはまた次回に説明します。</p>
+      
+			</div>
+			<div class="article-social" style="text-align: left;">
+  <iframe src="//www.facebook.com/plugins/like.php?locale=en_US&href=http://gold-experience.jp/articles/2014/02/03/mysql_command.html&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=599768760066068" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe>
+
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gold-experience.jp/articles/2014/02/03/mysql_command.html" data-text="NoSQL脳のためのSQLクエリー入門" data-lang="en" data-via="enzerubank" data-related="enzerubank">Tweet</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  </script>
+
+  <a href="http://gold-experience.jp/articles/2014/02/03/mysql_command.html" class="hatena-bookmark-button" data-hatena-bookmark-title="NoSQL脳のためのSQLクエリー入門" data-hatena-bookmark-layout="standard-balloon" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+</div>
+			<div id="disqus_thread"></div>
+            <script type="text/javascript">
+            //<![CDATA[
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//gold-experience-masaru.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            //]]>
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </script>
+        </div><!--LeftContent-->
+      </div><!--container-->
+    </div><!--Content-->
+
+		<div id="footer" class="container"></div>
+	</body>
+</html>

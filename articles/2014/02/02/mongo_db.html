@@ -55,11 +55,11 @@
   <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 </div>
 			<div id="articleBody">
-				<p>先週、日本に帰国してからバタバタしていてブログの更新が疎かになっていたので</p>
+				<p>先週、日本に帰国してからバタバタしていてブログが疎かになっていたので</p>
 
-<p>また更新していきます。</p>
+<p>今日から引き続き、更新していきます。</p>
 
-<p>今日は技術ネタということでMongo DBの基本的なコマンドのまとめ。</p>
+<p>よく使うMongo DBのコマンドをまとめました。</p>
 
 <h3 id="section">起動 &amp; 終了</h3>
 
@@ -85,13 +85,11 @@ test (empty)
 localhost (empty)
 </pre>
 
-<p>DBの選択</p>
+<p>DBの選択 &amp; 作成</p>
 
 <pre>
-&gt; use localhost
+&gt; use [DB名]
 </pre>
-
-<p>DBの作成</p>
 
 <p>MongoDBの場合は、SQLのように明示的にcreateする必要はありません。</p>
 
@@ -99,10 +97,6 @@ localhost (empty)
 自動的に作成されそのDBが指定されます。</p>
 
 <p>既に同じ名前のDBが存在すれば、そのままスイッチします。</p>
-
-<pre>
-&gt; use localhost
-</pre>
 
 <p>DBの削除</p>
 
@@ -115,7 +109,7 @@ localhost (empty)
 <p>コレクションの生成</p>
 
 <pre>
-&gt; db.createCollection('user');
+&gt; db.createCollection('[コレクション名]');
 </pre>
 
 <p>コレクションの一覧表示</p>
@@ -127,41 +121,48 @@ localhost (empty)
 <p>コレクションの削除</p>
 
 <pre>
-&gt; db.user.drop();
+&gt; db.[コレクション名].drop();
 </pre>
 
 <p>コレクション名の変更</p>
 
 <pre>
-&gt; db.user.renameCollection('users');
+&gt; db.[コレクション名].renameCollection('[新コレクション名]');
 </pre>
 
-<p>データの操作</p>
+<h3 id="section-3">データの操作</h3>
 
 <p>データの挿入</p>
 
 <pre>
-&gt; db.users.insert({“name”:"test", “email”:”test@gmail.com”, “age”:”25″});
+&gt; db.[コレクション名].insert({“name”:"test", “email”:”test@gmail.com”, “age”:”25″});
+</pre>
+
+<p>データの更新</p>
+
+<pre>
+// update [コレクション名] set y = 1 where x = 1
+db.[コレクション名].update({ x:1 }, { $set: { y : 1 } });
 </pre>
 
 <p>データの削除</p>
 
 <pre>
-&gt; db.users.remove();
+&gt; db.[コレクション名].remove();
 </pre>
 
-<h3 id="section-3">検索</h3>
+<h3 id="section-4">検索</h3>
 
 <p>一覧表示</p>
 
 <pre>
-&gt; db.users.find();
+&gt; db.[コレクション名].find();
 </pre>
 
 <p>条件付きの検索(年齢が20歳のものだけ)</p>
 
 <pre>
-&gt; db.users.find({“age”:20});
+&gt; db.[コレクション名].find({“age”:20});
 </pre>
 
 <p>条件付きの検索(年齢が20歳以外のもの)</p>
@@ -169,7 +170,7 @@ localhost (empty)
 <p>※ $ne はnot equal</p>
 
 <pre>
-&gt; db.users.find({“age”:{$ne:20}});
+&gt; db.[コレクション名].find({“age”:{$ne:20}});
 </pre>
 
 <p>条件付きの検索(年齢が20歳より上のもの)</p>
@@ -177,12 +178,20 @@ localhost (empty)
 <p>※ $gt　はgreater than</p>
 
 <pre>
-&gt; db.users.find({“age”:{$gt:20}});
+&gt; db.[コレクション名].find({“age”:{$gt:20}});
 </pre>
 
-<h3 id="section-4">インデックスの作成</h3>
+<h3 id="section-5">インデックスの作成</h3>
 
-<p>db.users.ensureIndex({id:1});</p>
+<pre>
+db.[コレクション名].ensureIndex({id:1});
+</pre>
+
+<p>複合インデックス</p>
+
+<pre>
+db.[コレクション名].ensureIndex({x:1, y:1});
+</pre>
 
 <p>※インデックスを貼ると参照は早くなりますが、データを書き込む時には都度インデックスを貼り直すので遅くなります。</p>
 
