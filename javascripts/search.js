@@ -26,7 +26,7 @@
           _results = [];
           for (_j = 0, _len1 = results.length; _j < _len1; _j++) {
             result = results[_j];
-            _results.push($('#SearchResult').append('<p><a class="copy-bg" href="/' + result.url + '">' + result.title + '</a></p>'));
+            _results.push($('#SearchResult').append('<p><a class="copy-bg" href="http://gold-experience.jp' + result.url + '">' + result.title + '</a></p>'));
           }
           return _results;
         } else {
@@ -61,7 +61,7 @@
             _results = [];
             for (_j = 0, _len1 = results.length; _j < _len1; _j++) {
               result = results[_j];
-              _results.push($('#SearchResult').append('<p><a class="copy-bg" href="/' + result.url + '">' + result.title + '</a></p>'));
+              _results.push($('#SearchResult').append('<p><a class="copy-bg" href="http://gold-experience.jp' + result.url + '">' + result.title + '</a></p>'));
             }
             return _results;
           } else {
